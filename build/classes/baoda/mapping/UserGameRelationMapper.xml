@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="baoda.dao.UserGameRelationMapper" >
+  <resultMap id="BaseResultMap" type="baoda.domain.UserGameRelation" >
+    <id column="u_id" property="uId" jdbcType="INTEGER" />
+    <id column="g_id" property="gId" jdbcType="INTEGER" />
+    <result column="finish_time" property="finishTime" jdbcType="VARCHAR" />
+    <result column="point" property="point" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    u_id, g_id, finish_time, point
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="baoda.domain.UserGameRelationKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_game_t
+    where u_id = #{uId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </select>
+    <select id="selectByUidAndFinishTimeIsNULL" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_game_t
+    where u_id = #{u_id,jdbcType=INTEGER}
+      and finish_time= 'NULL'
+  </select>
+      <select id="selectByUid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_game_t
+    where u_id = #{u_id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByGidAndFinishTimeIsNull" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from user_game_t
+    where g_id = #{g_id,jdbcType=INTEGER}
+      and finish_time='NULL'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="baoda.domain.UserGameRelationKey" >
+    delete from user_game_t
+    where u_id = #{uId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="baoda.domain.UserGameRelation" >
+    insert into user_game_t (u_id, g_id, finish_time, 
+      point)
+    values (#{uId,jdbcType=INTEGER}, #{gId,jdbcType=INTEGER}, #{finishTime,jdbcType=VARCHAR}, 
+      #{point,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="baoda.domain.UserGameRelation" >
+    insert into user_game_t
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="gId != null" >
+        g_id,
+      </if>
+      <if test="finishTime != null" >
+        finish_time,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="gId != null" >
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="baoda.domain.UserGameRelation" >
+    update user_game_t
+    <set >
+      <if test="finishTime != null" >
+        finish_time = #{finishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        point = #{point,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="baoda.domain.UserGameRelation" >
+    update user_game_t
+    set finish_time = #{finishTime,jdbcType=VARCHAR},
+      point = #{point,jdbcType=DOUBLE}
+    where u_id = #{uId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </update>
+</mapper>

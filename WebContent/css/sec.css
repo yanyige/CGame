@@ -1,0 +1,44 @@
+.gameInfo{
+	text-align: center;
+	background-color: rgb(48, 49, 51);
+	color: wheat;
+}
+.problem{
+	background-color: rgb(48, 49, 51);
+	width: 60%;
+	margin: 35px auto;
+	color: white;
+	padding: 20px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.problem .btn{
+	font-family: 'Microsoft YaHei UI';
+
+}
+.problem .btn-success{
+	float: right;
+	width: 100px;
+}
+.problem .formFooter{
+	margin-top: 15px;
+	line-height: 32px;
+}
+.finishedGame{
+	text-align: center;
+	background-color: rgb(48, 49, 51);
+	color: wheat;
+	position: relative;
+}
+.finishedGame>h1{
+	font-size: 63px;
+}
+.mt15{
+	margin-top: 15px;
+}
+.finishButton{
+	width: 100px;
+	position: absolute;
+	top: -64px;
+	right:20px;
+}

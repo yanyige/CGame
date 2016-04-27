@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="baoda.dao.ResultMapper" >
+  <resultMap id="BaseResultMap" type="baoda.domain.Result" >
+    <id column="u_id" property="uId" jdbcType="INTEGER" />
+    <id column="q_id" property="qId" jdbcType="INTEGER" />
+    <id column="g_id" property="gId" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    u_id, q_id, g_id, answer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="baoda.domain.ResultKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from result_t
+    where u_id = #{uId,jdbcType=INTEGER}
+      and q_id = #{qId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectByUidAndGid" resultMap="BaseResultMap" >
+       select 
+    <include refid="Base_Column_List" />
+    from result_t
+    where u_id = #{u_id,jdbcType=INTEGER}
+      and g_id = #{g_id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="baoda.domain.ResultKey" >
+    delete from result_t
+    where u_id = #{uId,jdbcType=INTEGER}
+      and q_id = #{qId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true"  keyProperty="id"  parameterType="baoda.domain.Result" >
+    insert into result_t (u_id, q_id, g_id, 
+      answer)
+    values (#{uId,jdbcType=INTEGER}, #{qId,jdbcType=INTEGER}, #{gId,jdbcType=INTEGER}, 
+      #{answer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true"  keyProperty="id"  parameterType="baoda.domain.Result" >
+    insert into result_t
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="qId != null" >
+        q_id,
+      </if>
+      <if test="gId != null" >
+        g_id,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="qId != null" >
+        #{qId,jdbcType=INTEGER},
+      </if>
+      <if test="gId != null" >
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="baoda.domain.Result" >
+    update result_t
+    <set >
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=INTEGER}
+      and q_id = #{qId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="baoda.domain.Result" >
+    update result_t
+    set answer = #{answer,jdbcType=VARCHAR}
+    where u_id = #{uId,jdbcType=INTEGER}
+      and q_id = #{qId,jdbcType=INTEGER}
+      and g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <!-- 批量更新结果 -->
+  <update id="batchUpdateAnswer2NULLbyUGQL"  >
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                 update result_t
+                 set answer='NULL'
+                where u_id = #{u_id} and g_id = #{g_id} and q_id=${item.id}
+         </foreach>
+    </update>
+      <!-- 批量更新结果 -->
+  <update id="batchUpdateAnswerbyUGQAM"  >
+          <foreach collection="map" index="key"  item="value" separator=";">
+                 update result_t
+                 set answer=#{value}
+                where u_id = #{u_id} and g_id = #{g_id} and q_id=#{key}
+         </foreach>
+    </update>
+</mapper>
