@@ -75,7 +75,7 @@ function submit(){
     var tScore = 0;
     $("#leftBox").hide();
     $("#leftBox1").hide();
-    $("#leftBox2").css({"height":"381px"});
+//    $("#leftBox2").css({"height":"381px"});
     $("#leftBox2").fadeIn(2000);
     while(youranss.length){
         youranss.pop();
@@ -98,16 +98,45 @@ function submit(){
         var text = document.getElementById("ans-table").children[0].children;
         //if(anss[i] == youranss[i]){
         if(checkFraction(anss[i], youranss[i])){
-            text[i].children[3].innerHTML = '<i class="fa fa-check"></i>';
+            text[i].children[3].innerHTML = '&radic;';
             tScore ++;
         }
         else
-            text[i].children[3].innerHTML = '<i class="fa fa-times"></i>';
+            text[i].children[3].innerHTML = 'X';
     }
     score += tScore;
     text[5].children[0].innerHTML = '#';
     text[5].children[1].innerHTML = '本次得分:' + tScore;
     text[5].children[2].innerHTML = '您的总分:' + score;
+//兼容性
+    var width = document.documentElement.clientWidth;
+    if(width <= 767){
+    	$("#leftBox2").children("img").remove();
+    	$("#leftBox2").children().eq(1).css({"right": "50px", "bottom": "0px"});
+////    	console.log($("#leftBox2").children().eq(1));
+    	$("#leftBox2").children().eq(2).css({"width": width-30+"px","margin-left":0+"px"});
+//    	$("#leftBox2").children().eq(2).children().eq(0).children().children("th").remove();
+//    	console.log($("#leftBox2").children().eq(2).children().eq(0));
+    	 text = document.getElementById("ans-table").children[0].children;
+    	    for(var i = 0 ; i < 5 ; i ++){
+    	        var text = document.getElementById("ans-table").children[0].children;
+    	        text[i].children[1].innerHTML = outputFraction(anss[i]);
+    	    }
+    	    for(var i = 0 ; i < 5 ; i ++){
+    	        var text = document.getElementById("ans-table").children[0].children;
+    	        text[i].children[2].innerHTML = youranss[i];
+    	    }
+    	    for(var i = 0 ; i < 5 ; i ++){
+    	        var text = document.getElementById("ans-table").children[0].children;
+    	        //if(anss[i] == youranss[i]){
+    	        if(checkFraction(anss[i], youranss[i])){
+    	            text[i].children[3].innerHTML = '&radic;';
+    	            tScore ++;
+    	        }
+    	        else
+    	            text[i].children[3].innerHTML = 'X';
+    	    }
+    }
 }
 
 function back(){
@@ -130,7 +159,7 @@ function getItem(MAXNUM, MAXDIGIT, PUNCTUATION, BRACKET, DENOMINATOR){
         items.push(getFormula(MAXNUM, MAXDIGIT, PUNCTUATION, BRACKET, DENOMINATOR));
     }
     showFormula(items);
-    $("#leftBox1").css({"height":"381px"});
+//    $("#leftBox1").css({"height":"381px"});
     $("#leftBox1").fadeIn(2000);
 
 }
@@ -278,6 +307,7 @@ function showFormula(items) { //显示公式并且计算答案
 
     }
     // console.log(anss);
+    //
 }
 
 function checkAns(){

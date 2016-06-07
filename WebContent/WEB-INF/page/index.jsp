@@ -21,14 +21,30 @@
 	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jumbotron.css">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome-4.5.0/css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/font-awesome-4.5.0/css/font-awesome.min.css"> -->
 	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.11.3.min.js "></script>
 	<script type="text/javascript" src="bower_components/bootstrap/js/modal.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/js/tooltip.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/js/popover.js"></script>
 	<script type="text/javascript" src="js/generation.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+	<style type="text/css">
+		#comment{width: 80%;}
+		#commentBtn{width: 19%;}
+		@media screen and (max-width: 780px){
+			#comment{width: 100%;}
+			#commentBtn{width: 100%;}
+		}
+		#comment,#commentBtn{
+			visibility: hidden;
+		}
+		#board:hover #comment,#board:hover #commentBtn{
+			opacity: 0.7;
+			visibility: visible;
+		}
+	</style>
 </head>
 
 <body>
@@ -42,23 +58,23 @@
       <div class="modal-body">
         <div class="form-group">
         	<label for="modal-usrname">用户名</label> <span style="color: red;">*</span> <span id="usrnameInfo" style="visibility: hidden; font-size: 12px; color: #7e7e7e;float:right;" >请输入4-20长度的英文字符</span>
-            <input type="text"  id="modal-usrname" name="un" placeholder="Username" class="form-control" onclick="insertUsrname()" onblur="checkUsrname()"/>
+            <input type="text"  id="modal-usrname" name="un" placeholder="Username" class="form-control" onclick="insertUsrname()" onblur="checkUsrname()" onfocus="insertUsrname()" />
         </div>
         <div class="form-group">
         	<label for="modal-passwd1">密码</label> <span style="color: red;">*</span> <span id="passwd1Info" style="visibility: hidden; font-size: 12px; color: #7e7e7e;float:right;" >密码长度至少为7</span>
-            <input name="pw1" id="modal-passwd1" type="password" placeholder="Password" class="form-control" onclick="insertPasswd1()" onblur="checkPasswd1()">
+            <input name="pw1" id="modal-passwd1" type="password" placeholder="Password" class="form-control" onclick="insertPasswd1()" onblur="checkPasswd1()" onfocus="insertPasswd1()">
         </div>
         <div class="form-group">
         	<label for="modal-passwd2">重复密码</label> <span style="color: red;">*</span> <span id="passwd2Info" style="visibility: hidden; font-size: 12px; color: #7e7e7e;float:right;" >密码必须保持相同</span>
-            <input name="pw2" id="modal-passwd2" type="password" placeholder="Repeat" class="form-control" onclick="insertPasswd2()" onblur="checkPasswd2()">
+            <input name="pw2" id="modal-passwd2" type="password" placeholder="Repeat" class="form-control" onclick="insertPasswd2()" onblur="checkPasswd2()" onfocus="insertPasswd2()">
         </div>
         <div class="form-group">
         	<label for="modal-email">邮箱地址</label> <span id="emailInfo" style="visibility: hidden; font-size: 12px; color: #7e7e7e;float:right;" >请输入正确格式的邮箱地址</span>
-            <input name="email" id="modal-email" type="text" placeholder="Email-Address" class="form-control" onclick="insertEmail()" onblur="checkEmail()">
+            <input name="email" id="modal-email" type="text" placeholder="Email-Address" class="form-control" onclick="insertEmail()" onblur="checkEmail()" onfocus="insertEmail()">
         </div>
         <div class="form-group">
         	<label for="modal-nickName">昵称</label> <span style="color: red;">*</span> <span id="nickInfo" style="visibility: hidden; font-size: 12px; color: #7e7e7e;float:right;" >昵称不能为空</span>
-            <input name="nickName" id="modal-nickName" type="text" placeholder="NickName" class="form-control" onclick="insertNick()" onblur="checkNick()">
+            <input name="nickName" id="modal-nickName" type="text" placeholder="NickName" class="form-control" onclick="insertNick()" onblur="checkNick()" onfocus="insertNick()">
         </div>
       </div>
       <div class="modal-footer">
@@ -106,7 +122,7 @@
         </div>
       </div>
 	</nav>
-	<div class="jumbotron">
+	<div class="jumbotron" id="top">
       <div class="container">
       	<div class="row">
       		<div class="col-md-10">
@@ -114,8 +130,7 @@
 		        <p>在这里你将攻克各个难题，和不同的人面对难易相近的难题。希望你能披荆斩棘，走向人生巅峰。</p>
 		        <strong>你可以：</strong>
 		        <small>独自通关</small><br>
-		        <small class="ml57">线上对战</small><br><br>
-		        <button class="btn btn-primary btn-xs" href="#" role="button">详细信息 »</button>
+		        <small class="ml57">聊天灌水</small><br><br>
       		</div>
   			<div class="col-md-2"><div class="thumbnail"><img src="images/logo.jpg" class="thumbnail" width="400em" height="200em"></div></div>
       	</div>
@@ -132,9 +147,9 @@
 		            <ul class="dropdown-menu btn-block">
 					  <li><a onclick="getItem(10, 4, 2, 0, 1)">白银</a></li>
 					  <li><a onclick="getItem(10, 4, 2, 0, 5)">黄金</a></li>
-					  <li><a onclick="getItem(100, 4, 2, 0, 10)">白金</a></li>
-					  <li><a onclick="getItem(100, 4, 4, 0, 10)">钻石</a></li>
-					  <li><a onclick="getItem(100, 4, 4, 1, 100)">最强王者</a></li>
+					  <li><a onclick="getItem(10, 4, 2, 0, 10)">白金</a></li>
+					  <li><a onclick="getItem(10, 4, 4, 0, 10)">钻石</a></li>
+					  <li><a onclick="getItem(10, 4, 4, 1, 10)">最强王者</a></li>
 					</ul>
 				</div>
 				<div class="info pd20">
@@ -147,13 +162,19 @@
 								un = user.getNickName();
 								p = user.getPoints().toString();
 								level = user.getLevel().toString();
-						}
+								%>
+								<span class="user-name block"><a href="userinfo" style="text-decoration: none; color: white;">姓名：<%=un%></a></span>
+								<span class="user-score block"><a href="userinfo" style="text-decoration: none; color: white;">分数：<%=p%></a></span>
+								<span class="user-rank block"><a href="userinfo" style="text-decoration: none; color: white;">等级：<%=level%></a></span>
+								<span class="guest-score block">测试得分：</span>
+								<span class="guest-score block"><button class="btn-warning choose btn-block" data-toggle="dropdown" aria-haspopup="true" onclick="showAllFormulas()">习题册</button></span><%
+						}else{
 					%>
-					<span class="user-name block"><a href="userinfo">姓名：<%=un%></a></span>
+					<span class="user-name block">姓名：<%=un%></span>
 					<span class="user-score block">分数：<%=p%></span>
 					<span class="user-rank block">等级：<%=level%></span>
 					<span class="guest-score block">测试得分：</span>
-					<span class="guest-score block"><button class="btn-warning choose btn-block" data-toggle="dropdown" aria-haspopup="true" onclick="showAllFormulas()">习题册</button></span>
+					<span class="guest-score block"><button class="btn-warning choose btn-block" data-toggle="dropdown" aria-haspopup="true" onclick="showAllFormulas()">习题册</button></span><%} %>
 				</div>
 	        </div>
 	        <div class="yourans col-md-5 bgc1 pd20" id="leftBox2" style="display: none">
@@ -232,7 +253,7 @@
 				<button class="btn-success btn-block" onclick="submit()" style="margin-top: 50px">提交</button>
 			</div>
 	        <div class="col-md-7 bgc2 pd20" id="rightBox">
-	        	<h4>榜上有名</h4>
+	        	<h4>榜上有名(Top 6)</h4>
 	        	<table class="table">
 	        		<thead>
 						<tr>
@@ -246,6 +267,7 @@
 	        	int i = 0;
 					List<User> su = (List<User>)request.getAttribute("su");
 				for (User u : su){
+				
 				%>
 					<tr>
 			            <th scope="row"><%=++i %></th>
@@ -253,7 +275,7 @@
 			            <td><%=u.getPoints()%></td>
 			            <td><%=u.getLevel()%></td>
 			        </tr>
-					<%
+					<%if(i >= 6){break;}
 				}
 				%>
 				</table>
@@ -277,22 +299,25 @@
 					<button class="btn-success btn-block" onclick="miss()" style="">隐藏</button>
 				</div>
 			</div>
-			<h1 style="display: block">灌水版聊区</h1>
+			<h1 style="display: block" id="chat" name="chat">灌水版聊区</h1>
     	</div>
     	
     </div>
-	<div style="margin-bottom: 60px">
+	<div style="margin-bottom: 60px;position:relative;">
 		<div class="container block">
 			<div class="row bgc1" id= "board" style="height: 500px; position: relative;">
 				<form class="form-inline">
 					<div class="form-group" style="position: absolute; bottom: 5px; width: 100%;">
-						<input type="text" class="form-control" id="comment" style="width: 80%">
-						<button type="button" id="commentBtn" class="btn btn-default" style="width: 19%">发送弹幕</button>
+						<input type="text" class="form-control" id="comment">
+						<button type="button" id="commentBtn" class="btn btn-default" >发送弹幕</button>
 					</div>
 				</form>
 			</div>
 		</div>
+
+		<a href="javascript:void(0)" onclick="document.getElementById('top').scrollIntoView();" style="text-align: center; display: block; margin-top: 30px;">返回顶部</a>
 	</div>
+
 
 	
 
@@ -302,14 +327,28 @@
     		<% if(user != null){%>
     		<div class="col-md-6 btn-success" style="min-height: 30px; line-height: 30px; text-align: center" onclick="Competed()"><a href = "game/normal">个人匹配</a></div>
     		<% }else{%>
-    		<div class="col-md-6 btn-success" style="min-height: 30px; line-height: 30px; text-align: center" onclick="pleaseLogIn()"><a href = "game/normal">个人匹配</a></div>
+    		<div class="col-md-6 btn-success" style="min-height: 30px; line-height: 30px; text-align: center" onclick="pleaseLogIn()"><a href = "javascript:void(0)">个人匹配</a></div>
     		<% }%>
-    		<div class="col-md-6 btn-warning" style="min-height: 30px; line-height: 30px; text-align: center">多人对战</div>
+    		<div class="col-md-6 btn-warning" style="min-height: 30px; line-height: 30px; text-align: center"><a href="javascript:void(0)" onclick="document.getElementById('chat').scrollIntoView();">聊天灌水</a></div>
     	</div>
     </nav>
 
 </body>
 <script type="text/javascript">
+
+	var ua = navigator.userAgent;
+    var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+            isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+            isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+            isMobile = isIphone || isAndroid;
+    if(isMobile) {
+    	var comment = document.getElementById("comment");
+    	var commentBtn = document.getElementById("commentBtn");
+    	comment.style.visibility = "visible";
+    	commentBtn.style.visibility = "visible";
+    }else{
+    }
+
 	function gid(id){
 		return document.getElementById(id+"");
 	}
@@ -339,7 +378,7 @@
 			usrnameInfo.innerHTML = '请输入4-20长度的英文字符';
 			usrnameInfo.style.color = 'red';
 		}else{
-			usrnameInfo.innerHTML = '正确';
+			usrnameInfo.innerHTML = '格式符合要求';
 			usrnameInfo.style.color = 'green';
 			return true;
 		}
@@ -446,14 +485,26 @@
 	function checkAll(){
 		var flag = false;
 		flag = (checkUsrname() && checkPasswd1() && checkPasswd2() && checkEmail() && checkNick());
-		console.log("usr="+checkUsrname());
-		console.log("checkPasswd1="+checkPasswd1());
-		console.log("checkPasswd2="+checkPasswd2());
-		console.log("checkEmail="+checkEmail());
-		console.log("checkNick="+checkNick());
 		if(flag){
-			var myModal = gid("myModal");
-			myModal.submit();
+			// var myModal = gid("myModal");
+			// myModal.submit();
+
+			$.ajax({
+                cache: true,
+                type: "POST",
+                url:"signup",
+                data:$('#myModal').serialize(),// 你的formid
+                async: true,
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(网络连接中断);
+                },
+                success: function(msg) {
+                    if(msg=="true"){alert("成功")}
+                    else{
+                    	alert("该用户名已经被注册");
+                    }
+                }
+            });
 		}else{
 			alert('请检查您的信息');
 		}
@@ -476,6 +527,7 @@ $(document).ready(function(){
 });
 
 var board = $("#board");
+var colors = ["cornflowerblue", "coral", "#ffe87c", "greenyellow", "orange", "white", "#f0ad4e;", "#5cb85c"];
 
 setInterval(function(){
 	$.get("getComment",function(data,status){
@@ -484,31 +536,39 @@ setInterval(function(){
     		for (var property in obj[i]) {  
     			var comment = document.createElement('div');
                 comment.style.position = 'absolute';
-                comment.style.top = Math.random() * 500 + 'px';
-                comment.style.fontSize = Math.random() * 30 + 'px';
+                var maxTop = 450;
+                var minTop = 0;
+                comment.style.top = Math.random() * (maxTop - minTop) + minTop + 'px';
+                var maxFont = 50;
+                var minFont = 20;
+                comment.style.fontSize = Math.random() * (maxFont - minFont) + minFont + 'px';
                 comment.style.whiteSpace = 'nowrap';
                 comment.innerHTML = obj[i][property];
                 comment.id = property;
                 var cid = "#"+property;
-                comment.setAttribute("speed", Math.random() * 5000);
+                var maxSpeed = 8000;
+                var minSpeed = 2000;
+                comment.setAttribute("speed", Math.random() * (maxSpeed - minSpeed) + minSpeed);
+                var color = Math.floor(Math.random() * 8);
+                comment.style.color = colors[color];
                 board.append(comment);
                 var my = $(cid);
                 my.animate({left:"100%"},parseInt(comment.getAttribute("speed")),
                 	function(){
                 		comment.remove();
                 	});
-       //          console.log(comment.getAttribute("speed"));
-		    	// console.log(obj[i][property]);  
+ 				
 		    }  
     	}
-    	// var comments = $(".generatedComment");
-    	// console.log(comments);
-	    // for(var i = 0 ; i < comments[i] ; i ++){
-	    // 	console.log(comments[i].speed);
-
-	    // }
     });
-    
+    var boardchild = board.children();
+    for(var i = 0 ;i < boardchild.length ; i ++){
+    	console.log(boardchild[i].style.left);
+    	if(boardchild[i].style.left == "100%"){
+    		boardchild[i].remove();
+    	}
+    }
+    console.log("asd");
 },2000);
 
 </script>
